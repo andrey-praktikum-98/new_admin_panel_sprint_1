@@ -16,8 +16,8 @@ POSTGRES_DB_DSN = {
                    'dbname': os.getenv('POSTGRES_DB'),
                    'user': os.getenv('POSTGRES_USER'),
                    'password': os.getenv('POSTGRES_PASSWORD'),
-                   'host': 'localhost',
-                   'port': 5432,
+                   'host': os.getenv('POSTGRES_HOST'),
+                   'port': os.getenv('POSTGRES_PORT'),
                    'options': '-c search_path=content'
                    }
 BUTCH_SIZE = 100
