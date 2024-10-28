@@ -86,6 +86,7 @@ class GenreFilmwork(UUIDMixin, TimeStampedCreatedMixin):
             models.Index(fields=['film_work', 'genre'],
                          name='genre_film_work_idx_fk'),
         ]
+        unique_together = ["film_work", "genre"]
 
 
 class PersonFilmwork(UUIDMixin, TimeStampedCreatedMixin):
@@ -115,3 +116,4 @@ class PersonFilmwork(UUIDMixin, TimeStampedCreatedMixin):
             models.Index(fields=['film_work', 'person', 'role'],
                          name='person_role_film_work_idx_fk'),
         ]
+        unique_together = ["film_work", "person", "role"]
