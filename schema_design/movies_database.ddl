@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS content.film_work (
     title TEXT NOT NULL,
     description TEXT,
     creation_date DATE,
-    rating FLOAT,
+    rating FLOAT CHECK (rating >= 0 AND rating <= 100),
     file_path TEXT
     type TEXT not null,
     created_at timestamp with time zone,
@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS content.person_film_work (
     created_at timestamp with time zone
 );
 
+CREATE UNIQUE INDEX person_role_film_work_idx_fk ON content.person_film_work (film_work_id, person_id, role);
 CREATE UNIQUE INDEX genre_film_work_idx_fk ON content.genre_film_work (film_work_id, genre_id);
 CREATE INDEX film_work_id_idx ON content.film_work(id);
 CREATE INDEX film_work_title_idx ON content.film_work(title);
