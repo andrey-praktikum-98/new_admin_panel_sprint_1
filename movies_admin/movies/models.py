@@ -89,15 +89,29 @@ class GenreFilmwork(UUIDMixin, TimeStampedCreatedMixin):
 
 
 class PersonFilmwork(UUIDMixin, TimeStampedCreatedMixin):
+    class Role(models.TextChoices):
+        DIRECTOR = 'director', 'Director'
+        WRITER = 'writer', 'Writer'
+        ACTOR = 'actor', 'Actor'
+
     film_work = models.ForeignKey(Filmwork, on_delete=models.CASCADE,
                                   verbose_name=_('filmwork'),
                                   related_name="person_filmwork")
     person = models.ForeignKey(Person, on_delete=models.CASCADE,
                                verbose_name=_('person'),
                                related_name="person_filmwork")
-    role = models.TextField(_('role'))
+    role = models.CharField(
+        _('role'),
+        max_length=10,
+        choices=Role.choices,
+        default=Role.ACTOR,
+    )
 
     class Meta:
         db_table = "content\".\"person_film_work"
         verbose_name = _('person filmwork')
         verbose_name_plural = _('persons filmworks')
+        indexes = [
+            models.Index(fields=['film_work', 'person', 'role'],
+                         name='person_role_film_work_idx_fk'),
+        ]
